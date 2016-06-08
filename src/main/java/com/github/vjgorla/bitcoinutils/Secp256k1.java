@@ -13,12 +13,12 @@ public class Secp256k1 {
         Crypt.init();
     }
 
-    private final static ECParameterSpec p = ECNamedCurveTable.getParameterSpec("secp256k1");
-    private final static ECCurve curve = p.getCurve();
-    private final static ECPoint G = p.getG();
+    private final static ECParameterSpec PARAM_SPEC = ECNamedCurveTable.getParameterSpec("secp256k1");
+    private final static ECCurve curve = PARAM_SPEC.getCurve();
+    private final static ECPoint G = PARAM_SPEC.getG();
     
     public static ECPoint getPoint(BigInteger k) {
-        return G.multiply(k.mod(p.getN()));
+        return G.multiply(k.mod(PARAM_SPEC.getN()));
     }
     
     public static ECPoint getG() {
@@ -26,14 +26,18 @@ public class Secp256k1 {
     }
     
     public static BigInteger getN() {
-        return p.getN();
+        return PARAM_SPEC.getN();
     }
     
     public static int getFieldSize() {
-        return p.getCurve().getFieldSize();
+        return PARAM_SPEC.getCurve().getFieldSize();
     }
     
     public static ECCurve getCurve() {
         return curve;
+    }
+
+    public static ECParameterSpec getParameterSpec() {
+        return PARAM_SPEC;
     }
 }
